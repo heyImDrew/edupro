@@ -1,9 +1,6 @@
 version: "3.2"
 
 services:
-  db:
-    env_file:
-      - enviroment/.staging.env
   backend:
     env_file:
-      - enviroment/.staging.env
+      - backend/enviroment/.staging.env

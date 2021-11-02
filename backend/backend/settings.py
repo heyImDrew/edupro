@@ -42,7 +42,9 @@ EXTERNAL_APPS = [
     'corsheaders',
     'rest_framework',
 ]
-MANAGED_APPS = []
+MANAGED_APPS = [
+    'user_application'
+]
 INSTALLED_APPS = DEFAULT_APPS + EXTERNAL_APPS + MANAGED_APPS
 
 MIDDLEWARE = [
@@ -86,12 +88,12 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 
 DATABASES = {
     "default": {
-        "ENGINE": os.environ.get("SQL_ENGINE", "django.db.backends.sqlite3"),
-        "NAME": os.environ.get("SQL_DATABASE", BASE_DIR / "db.sqlite3"),
-        "USER": os.environ.get("SQL_USER", "user"),
-        "PASSWORD": os.environ.get("SQL_PASSWORD", "password"),
-        "HOST": os.environ.get("SQL_HOST", "localhost"),
-        "PORT": os.environ.get("SQL_PORT", "5432"),
+        "ENGINE": os.environ.get("ENGINE", "django.db.backends.sqlite3"),
+        "NAME": os.environ.get("NAME", BASE_DIR / "db.sqlite3"),
+        "USER": os.environ.get("USER", "user"),
+        "PASSWORD": os.environ.get("PASSWORD", "password"),
+        "HOST": os.environ.get("HOST", "localhost"),
+        "PORT": os.environ.get("PORT", "5432"),
     }
 }
 
