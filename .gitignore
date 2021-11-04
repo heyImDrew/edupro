@@ -28,6 +28,7 @@ MANIFEST
 
 # React
 node_modules/
+package-lock.json
 
 # Idea
 .idea/

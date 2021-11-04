@@ -41,6 +41,8 @@ DEFAULT_APPS = [
 EXTERNAL_APPS = [
     'corsheaders',
     'rest_framework',
+    'rest_framework_simplejwt',
+    'drf_yasg',
 ]
 MANAGED_APPS = [
     'user_application'
@@ -57,6 +59,15 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ],
+}
 
 CORS_ORIGIN_WHITELIST = [
     'http://localhost:3000',
