@@ -28,7 +28,7 @@ schema_view = get_schema_view(
       contact=openapi.Contact(email="a.kulakou@gmail.com"),
       license=openapi.License(name="BSD License"),
    ),
-   url='http://localhost:9000/',
+   url='http://localhost:9000/api/',
    public=True,
    permission_classes=(permissions.AllowAny,),
 )
@@ -39,7 +39,7 @@ urlpatterns = [
     path('api/users/', include('user_application.urls')),
 
     # Swagger
-    path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
-    path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
+    path('api/swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
+    path('api/redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
 
 ] + staticfiles_urlpatterns()
