@@ -8,16 +8,10 @@ from drf_yasg.utils import swagger_auto_schema
 
 from ..services.user_service import user_service
 
+
 class UserViewSet(viewsets.ViewSet):
     serializer = UserSerializer
     register_serializer = UserRegisterSerializer
-
-    """
-    Property to get the QuerySet of existing Users
-    """
-    @property
-    def queryset(self):
-        return User.objects.all()
 
     """
     Returns user that is authenticated by token

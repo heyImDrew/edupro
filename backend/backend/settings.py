@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 import os
+from datetime import timedelta
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -45,7 +46,8 @@ EXTERNAL_APPS = [
     'drf_yasg',
 ]
 MANAGED_APPS = [
-    'user_application'
+    'user_application',
+    'desk_application',
 ]
 INSTALLED_APPS = DEFAULT_APPS + EXTERNAL_APPS + MANAGED_APPS
 
@@ -161,4 +163,8 @@ SWAGGER_SETTINGS = {
             'in': 'header'
       }
    }
+}
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
 }

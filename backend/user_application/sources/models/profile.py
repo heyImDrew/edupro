@@ -9,3 +9,6 @@ class Profile(models.Model):
     profile_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     user_id = models.IntegerField(primary_key=False, null=False, blank=False)
     # Other fields
+
+    def __str__(self):
+        return f"user_id: {self.user_id}"
