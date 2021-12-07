@@ -1,8 +1,5 @@
-import uuid
-
 from django.contrib.auth.models import User
 from ..serializers.user_serializers import UserSerializer
-from ..models.profile import Profile
 
 
 class UserService:
