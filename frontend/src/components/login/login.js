@@ -2,18 +2,10 @@ import './login.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {useState} from "react";
 import {login} from "../../actions/login";
-import {connect, useSelector} from "react-redux";
+import {connect} from "react-redux";
 import {Navigate} from "react-router-dom";
-import {toast} from "react-toastify";
 
 const Login = ({isAuthenticated, login}) => {
-    function sleep(milliseconds) {
-      const date = Date.now();
-      let currentDate = null;
-      do {
-        currentDate = Date.now();
-      } while (currentDate - date < milliseconds);
-    }
     const [formData, setFormData] = useState({
         username: '',
         password: '',
@@ -22,14 +14,13 @@ const Login = ({isAuthenticated, login}) => {
     const onChange = e => setFormData({...formData, [e.target.name]: e.target.value });
     const onSubmit = e => {
         e.preventDefault();
-        toast.info("Trying to login...")
         login(username, password);
 
     };
 
     if (isAuthenticated) {
 
-        return <Navigate to="/home"/>
+        return <Navigate to="/dashboard"/>
     }
     return (
 

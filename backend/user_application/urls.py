@@ -5,11 +5,13 @@ from .views import (
     DecoratedTokenRefreshView,
     UserViewSet,
     FeedbackViewSet,
+    DashNewsViewSet,
 )
 
 router = DefaultRouter()
 router.register(r'users', UserViewSet, basename='users')
 router.register(r'feedbacks', FeedbackViewSet, basename='feedbacks')
+router.register(r'dashnews', DashNewsViewSet, basename='dashnews')
 
 token_urlpatterns = [
     path('token/', DecoratedTokenObtainPairView.as_view(), name='token_obtain_pair'),

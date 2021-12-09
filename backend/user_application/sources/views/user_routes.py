@@ -35,3 +35,10 @@ class UserViewSet(viewsets.ViewSet):
             password=request.data.get('password')
         )
         return Response(response, status=status_code)
+
+    @swagger_auto_schema(
+        tags=['User'])
+    @action(methods=['get'], detail=False, permission_classes=[IsAuthenticated])
+    def information(self, request):
+        response = user_service.get_information(request.user)
+        return Response(response)

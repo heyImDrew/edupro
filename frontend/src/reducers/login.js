@@ -34,6 +34,14 @@ export default function login (state = initialState, action) {
                 user: null,
                 isAuthenticated: false,
             }
+        case authConstants.LOGOUT_SUCCESS:
+            localStorage.removeItem("token");
+            return {
+                ...state,
+                token: null,
+                user: null,
+                isAuthenticated: false,
+            }
         default:
             return state;
     }

@@ -5,7 +5,7 @@ import {connect, useDispatch, useSelector} from "react-redux";
 import {Navigate, Link} from "react-router-dom";
 import {Dropdown} from "react-bootstrap";
 import styled from "styled-components";
-import {load_dashnews} from "../../actions/dashnews";
+import {load_desks} from "../../actions/desks";
 import {useEffect} from "react";
 
 const LinkWrapper = styled(Link)`
@@ -16,16 +16,35 @@ const LinkWrapper = styled(Link)`
     }
 `
 
+const LinkWrapperButton = styled(Link)`
+    text-decoration: none;
+    color: white;
+    :hover{
+        color: white;
+    };
+    font-size: 15px;
+`
 
-const Home = () => {
+const LinkWrapperButtonCreate = styled(Link)`
+    text-decoration: none;
+    color: white;
+    :hover{
+        color: white;
+    };
+    font-size: 24px;
+`
+
+
+const Desks = () => {
 
     const user = useSelector(state => state.login.user);
 
     const dispatch = useDispatch();
     useEffect(() => {
-        dispatch(load_dashnews());
+        dispatch(load_desks());
         }, [])
-    const dashnews = useSelector(state => state.dashnews.dashnews);
+    const desks = useSelector(state => state.desks.desks);
+
 
     if (user) {
         return (
@@ -36,13 +55,13 @@ const Home = () => {
                             <a className="list-group-item list-group-item-action list-group-item-light p-3" style={{background: "#0b5ed7", color: "white"}}
                                href="#!"><b>EduPro Platform</b></a>
                             <a className="list-group-item list-group-item-action list-group-item-light p-3">
-                                <b style={{color: "black"}}>Dashboard</b>
+                                <LinkWrapper to="/dashboard">Dashboard</LinkWrapper>
                             </a>
                             <a className="list-group-item list-group-item-action list-group-item-light p-3">
                                 <LinkWrapper to="/courses">My Courses</LinkWrapper>
                             </a>
                             <a className="list-group-item list-group-item-action list-group-item-light p-3">
-                                <LinkWrapper to="/desks">My Cards</LinkWrapper>
+                                <b style={{color: "black"}}>My Cards</b>
                             </a>
                         </div>
                     </div>
@@ -72,54 +91,35 @@ const Home = () => {
                                 </div>
                             </div>
                         </nav>
-                        <div className="container-fluid" style={{paddingLeft: "150px", paddingRight: "150px", paddingTop: "30px"}}>
-                            <h1>Platform News:</h1>
-                            <div className="row">
-                                {dashnews.map((item, index) =>{
+                        <div className="container-fluid" style={{paddingLeft: "75px", paddingRight: "75px", paddingTop: "25px"}}>
+                            <h1 style={{marginBottom: "30px"}}>
+                                My Card Desks
+                                <a className="btn btn-primary btn-success px-4 me-sm-3" style={{marginLeft: "946px"}} >
+                                    <LinkWrapperButtonCreate to="/desks/create">Create Desk!</LinkWrapperButtonCreate>
+                                </a>
+                            </h1>
+
+                            {desks.map((item, index) =>{
                                     return (
-                                        <div className="col-lg-4 col-md-4 col-sm-6 mb-5">
-                                            <div className="card bg-light" style={{height: "375px"}}>
-                                               <img className="card-img-top"
-                                                                 src={item.url} alt="" height="225px"/>
-                                                <div className="card-body" style={{height: "150px"}}>
-                                                    <h4 className="card-title">
-                                                        {item.header}
-                                                    </h4>
-                                                    <p className="card-text">{item.text}</p>
+                                        <div className="card border-primary mb-3">
+                                            <div className="card-header">
+                                                <div className="row">
+                                                    <div className="col" style={{fontSize: "18px"}}>EduPro Cards Desk №{index + 1}</div>
+                                                    <div className="col" style={{textAlign: "right"}}>
+                                                        <a className="btn btn-primary btn-sm px-4 me-sm-3" >
+                                                            <LinkWrapperButton to={`/desks/${item.desk_id}`}>Dive into!</LinkWrapperButton>
+                                                        </a>
+                                                    </div>
                                                 </div>
+                                            </div>
+                                            <div className="card-body text-primary">
+                                                <h5 className="card-title" style={{color:"black", fontSize:"32px", marginBottom: "20px"}}><b>{item.name}</b></h5>
+                                                <p className="card-text">{item.description}</p>
                                             </div>
                                         </div>
                                     )
                                 })}
-                            </div>
-                        </div>
-                        <div className="container-fluid" style={{paddingLeft: "150px", paddingRight: "150px"}}>
-                            <h1>Don't forget to repeat your knowledge!</h1>
-                            <h6>(Random Course and Desk)</h6>
-                            <div className="row">
-                                <div className="col-lg-4 col-md-4 col-sm-6 mb-5">
-                                    <div className="card bg-light" style={{height: "275px"}}>
-                                        <a href="#"><img className="card-img-top"
-                                                         src="https://sun9-68.userapi.com/impg/c850608/v850608293/188e68/-r6r2EQYRNs.jpg?size=1280x844&quality=96&sign=b4dbd576db84649c17c2baad2ff16541&type=album" alt="" height="200px"/></a>
-                                        <div className="card-body" style={{height: "75px"}}>
-                                            <h4 className="card-title">
-                                                Random Course
-                                            </h4>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="col-lg-4 col-md-4 col-sm-6 mb-5">
-                                    <div className="card bg-light" style={{height: "275px"}}>
-                                        <a href="#"><img className="card-img-top"
-                                                         src="https://sun9-68.userapi.com/impg/c850608/v850608293/188e68/-r6r2EQYRNs.jpg?size=1280x844&quality=96&sign=b4dbd576db84649c17c2baad2ff16541&type=album" alt="" height="200px"/></a>
-                                        <div className="card-body" style={{height: "75px"}}>
-                                            <h4 className="card-title">
-                                                Random Desk
-                                            </h4>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -132,7 +132,8 @@ const Home = () => {
     }
 }
 
+
 const mapStateToProps = state => ({
 });
 
-export default connect(mapStateToProps, {load_dashnews})(Home);
+export default connect(mapStateToProps, {load_desks})(Desks);

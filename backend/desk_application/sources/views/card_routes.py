@@ -36,3 +36,10 @@ class CardViewSet(viewsets.ViewSet):
             card_id=request.data['card_id']
         )
         return Response(response)
+
+    @swagger_auto_schema(
+        tags=['Cards'])
+    @action(methods=['GET'], detail=False, permission_classes=[IsAuthenticated])
+    def amount(self, request):
+        response = card_service.amount(request.user)
+        return Response(response)

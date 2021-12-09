@@ -52,3 +52,9 @@ export const login = (username, password) => async dispatch => {
         })
     }
 };
+
+export const logout = () => dispatch => {
+    dispatch({
+        type: authConstants.LOGOUT_SUCCESS
+    })
+};

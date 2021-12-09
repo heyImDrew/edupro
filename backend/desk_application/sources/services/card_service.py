@@ -1,7 +1,8 @@
 import uuid
 
+from ..models.desk import Desk
 from ..models.card import Card
-from ..serializers.card_serializer import CardSerializer
+from ..serializers.card_serializer import CardSerializer\
 
 
 class CardService:
@@ -15,6 +16,11 @@ class CardService:
         cards = Card.objects.filter(desk_id=desk_id)
         serializer = CardSerializer(cards, many=True)
         return serializer.data
+
+    def amount(self, user):
+        desk_ids = Desk.objects.filter(created_by_id=user.id).values_list('desk_id', flat=True)
+        cards = Card.objects.filter(desk_id__in=desk_ids)
+        return {"desks": len(desk_ids), "cards": len(cards)}
 
     def add_card(self, desk_id, question=None, answer=None):
         card = Card()
