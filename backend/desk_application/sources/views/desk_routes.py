@@ -82,3 +82,10 @@ class DeskViewSet(viewsets.ViewSet):
             desk_id=request.data['desk_id']
         )
         return Response(response)
+
+    @swagger_auto_schema(
+        tags=['Desks'])
+    @action(methods=['GET'], detail=False, permission_classes=[IsAuthenticated])
+    def random(self, request):
+        response = desk_service.random(request.user.id)
+        return Response(response)

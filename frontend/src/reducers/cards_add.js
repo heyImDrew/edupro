@@ -1,21 +1,18 @@
 import {authConstants} from "../actions/types";
 
 const initialState = {
-    dashnews: {
-        'data': [],
-        'random_desk_data': {}
-    }
+    card_id: null,
 }
 
-export default function dashnews (state = initialState, action) {
+export default function cards_add (state = initialState, action) {
     const {type, payload} = action;
     switch (type) {
-        case authConstants.GET_DASHNEWS_SUCCESS:
+        case authConstants.CARDS_ADD_SUCCESS:
             return {
                 ...state,
-                dashnews: payload
+                card_id: payload
             }
-        case authConstants.GET_DASHNEWS_FAIL:
+        case authConstants.CARDS_ADD_FAIL:
             return {
                 ...state,
             }

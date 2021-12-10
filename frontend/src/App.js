@@ -13,6 +13,8 @@ import Desks from "./components/desks/desks";
 import Courses from "./components/courses/courses";
 import Cards from "./components/cards/cards";
 import DesksCreate from "./components/desks/desks_create"
+import DesksEdit from "./components/desks/desks_edit";
+import CardsAdd from "./components/cards/cards_add";
 
 
 const App = () => (
@@ -25,6 +27,8 @@ const App = () => (
                 <Route exact path="/desks" element={<Desks />} />
                 <Route path="/courses" element={<Courses />} />
                 <Route path="/desks/:desk_id" element={<Cards />} />
+                <Route path="/desks/edit/:desk_id" element={<DesksEdit />} />
+                <Route path="/desks/add/card/:desk_id/" element={<CardsAdd />} />
                 <Route path="/desks/create" element={<DesksCreate />} />
                 <Route path="/" element={<Index />} />
             </Routes>

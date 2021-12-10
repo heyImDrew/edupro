@@ -30,7 +30,7 @@ class CardViewSet(viewsets.ViewSet):
     @swagger_auto_schema(
         request_body=CardDeleteSerializer,
         tags=['Cards'])
-    @action(methods=['DELETE'], detail=False, permission_classes=[IsAuthenticated])
+    @action(methods=['POST'], detail=False, permission_classes=[IsAuthenticated])
     def remove(self, request):
         response = card_service.remove_card(
             card_id=request.data['card_id']

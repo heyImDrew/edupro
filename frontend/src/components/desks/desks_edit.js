@@ -5,8 +5,9 @@ import {connect, useDispatch, useSelector} from "react-redux";
 import {Navigate, Link} from "react-router-dom";
 import {Dropdown} from "react-bootstrap";
 import styled from "styled-components";
+import {useEffect, useState} from "react";
 import {load_desks} from "../../actions/desks";
-import {useEffect} from "react";
+import axios from "axios";
 
 const LinkWrapper = styled(Link)`
     text-decoration: none;
@@ -31,20 +32,46 @@ const LinkWrapperButtonCreate = styled(Link)`
     :hover{
         color: white;
     };
-    font-size: 24px;
+    font-size: 18px;
 `
 
 
-const Desks = () => {
+const DesksEdit = () => {
 
-    const user = useSelector(state => state.login.user);
-
-    const dispatch = useDispatch();
+    let dispatch = useDispatch()
     useEffect(() => {
         dispatch(load_desks());
         }, [])
-    const desks = useSelector(state => state.desks.desks);
 
+    const user = useSelector(state => state.login.user);
+    const data = useSelector(state => state.desks.desks);
+
+    const get_desk = () => {
+        let search = window.location.pathname;
+        let match = search.match(/\/desks\/edit\/(.*)/);
+        let desk_id = match?.[1];
+        for (let i=0; i < data.length; i++) {
+            if (data[i].desk_id === desk_id) {
+                return data[i];
+            }
+        }
+        return null;
+    }
+
+    let desk = get_desk();
+    let cards = get_desk().cards;
+
+    const OnRemoveClick = card_id => {
+        let data = {card_id: card_id}
+        let config = { headers: {
+                    'Content-Type': "application/json",
+                    'Authorization': 'Bearer ' + localStorage.getItem('token')
+                }}
+        axios.post("http://localhost:9000/api/cards/remove/", JSON.stringify(data), config)
+        dispatch(load_desks());
+    }
+
+    console.log(get_desk())
 
     if (user) {
         return (
@@ -61,7 +88,7 @@ const Desks = () => {
                                 <LinkWrapper to="/courses">My Courses</LinkWrapper>
                             </a>
                             <a className="list-group-item list-group-item-action list-group-item-light p-3">
-                                <b style={{color: "black"}}>My Cards</b>
+                                <LinkWrapper to="/desks">My Cards</LinkWrapper>
                             </a>
                         </div>
                     </div>
@@ -91,37 +118,45 @@ const Desks = () => {
                                 </div>
                             </div>
                         </nav>
-                        <div className="container-fluid" style={{paddingLeft: "75px", paddingRight: "75px", paddingTop: "25px"}}>
-                            <h1 style={{marginBottom: "30px", fontSize: "42px"}}>
-                                My Card Desks
-                                <a className="btn btn-primary btn-success px-4 me-sm-3" style={{marginLeft: "924px"}} >
-                                    <LinkWrapperButtonCreate to="/desks/create">Create Desk!</LinkWrapperButtonCreate>
-                                </a>
-                            </h1>
+                        <div className="container-fluid" style={{paddingLeft: "75px", paddingRight: "75px", paddingTop: "10px"}}>
 
-                            {desks.map((item, index) =>{
+                            <form>
+                                <h2 style={{marginBottom: "5px"}}>Desk Information Edit</h2>
+                                <div className="form-group" style={{marginBottom: "5px"}}>
+                                    <label htmlFor="desk_h">Header</label>
+                                    <input type="text" className="form-control" id="desk_h" name="desk_h" value={desk.name}
+                                           placeholder="Enter Desk Header" disabled="true" required/>
+                                </div>
+                                <div className="form-group">
+                                    <label htmlFor="desk_d">Description</label>
+                                    <input type="text" className="form-control" id="desk_d" name="desk_d" value={desk.description}
+                                           placeholder="Enter Desk Description" disabled="true" required/>
+                                </div>
+                                <h2 style={{marginTop: "20px"}}>Cards Information Edit</h2>
+
+                                {cards.map((item, index) =>{
                                     return (
-                                        <div className="card border-primary mb-3">
-                                            <div className="card-header">
-                                                <div className="row">
-                                                    <div className="col" style={{fontSize: "18px"}}>EduPro Cards Desk №{index + 1}</div>
-                                                    <div className="col" style={{textAlign: "right"}}>
-                                                        <a className="btn btn-info btn-sm px-4 me-sm-3">
-                                                            <LinkWrapperButton to={`/desks/edit/${item.desk_id}`}>Edit</LinkWrapperButton>
-                                                        </a>
-                                                        <a className="btn btn-primary btn-sm px-4 me-sm-3" >
-                                                            <LinkWrapperButton to={`/desks/${item.desk_id}`}>Dive into!</LinkWrapperButton>
-                                                        </a>
-                                                    </div>
-                                                </div>
+                                        <div>
+                                            <h4 style={{marginBottom: "10px", marginTop: "15px"}}>- Card №{index + 1}
+                                                <a className="btn btn-secondary btn-sm px-4 me-sm-3" onClick={(e) => OnRemoveClick(item.card_id)} style={{marginLeft: "20px"}}>Remove</a>
+                                            </h4>
+
+                                            <div className="form-group" style={{marginBottom: "5px"}}>
+                                                <label htmlFor="card_1_q">Question</label>
+                                                <input type="text" className="form-control" id="card_1_q" name="card_1_q" value={item.question}
+                                                       placeholder="Enter Card Question" required/>
                                             </div>
-                                            <div className="card-body text-primary">
-                                                <h5 className="card-title" style={{color:"black", fontSize:"32px", marginBottom: "20px"}}><b>{item.name}</b></h5>
-                                                <p className="card-text">{item.description}</p>
+                                            <div className="form-group">
+                                                <label htmlFor="card_1_a">Answer</label>
+                                                <input type="text" className="form-control" id="card_1_a" name="card_1_a" value={item.answer}
+                                                       placeholder="Enter Card Answer" required/>
                                             </div>
                                         </div>
                                     )
                                 })}
+                                <button className="btn-lg btn-secondary" style={{width: "100%", marginTop: "30px", marginBottom: "5px"}}><LinkWrapperButtonCreate to={`/desks/add/card/${desk.desk_id}`}>Add Card</LinkWrapperButtonCreate></button>
+                                <button className="btn-lg btn-primary" style={{width: "100%", marginTop: "30px", marginBottom: "50px"}} disabled="true">Submit</button>
+                            </form>
 
                         </div>
                     </div>
@@ -136,7 +171,4 @@ const Desks = () => {
 }
 
 
-const mapStateToProps = state => ({
-});
-
-export default connect(mapStateToProps, {load_desks})(Desks);
+export default DesksEdit;

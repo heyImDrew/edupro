@@ -1,3 +1,4 @@
+import random
 import uuid
 
 from ..models.desk import Desk
@@ -84,5 +85,12 @@ class DeskService:
         user_desk.save()
         return {"status": user_desk.liked}
 
+    def random(self, user_id):
+        user_desks = UserDesk.objects.filter(
+            user_id=user_id
+        )
+        if len(user_desks) == 0:
+            return {'desk_id': None}
+        return {'desk_id': random.choice(user_desks).desk_id}
 
 desk_service = DeskService()

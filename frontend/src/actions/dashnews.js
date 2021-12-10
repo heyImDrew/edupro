@@ -12,9 +12,10 @@ export const load_dashnews = () => async dispatch => {
     };
     try {
         const res = await axios.get(HOST + "dashnews/", config)
+        const randres = await axios.get(HOST + "desks/random/", config)
         dispatch({
             type: authConstants.GET_DASHNEWS_SUCCESS,
-            payload: res.data
+            payload: {data: res.data, random_desk_data: randres.data}
         })
 
     } catch (err) {
