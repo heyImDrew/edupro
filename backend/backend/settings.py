@@ -48,6 +48,7 @@ EXTERNAL_APPS = [
 MANAGED_APPS = [
     'user_application',
     'desk_application',
+    'course_application',
 ]
 INSTALLED_APPS = DEFAULT_APPS + EXTERNAL_APPS + MANAGED_APPS
 

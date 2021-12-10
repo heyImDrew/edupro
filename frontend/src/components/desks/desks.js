@@ -7,6 +7,7 @@ import {Dropdown} from "react-bootstrap";
 import styled from "styled-components";
 import {load_desks} from "../../actions/desks";
 import {useEffect} from "react";
+import axios from "axios";
 
 const LinkWrapper = styled(Link)`
     text-decoration: none;
@@ -44,6 +45,22 @@ const Desks = () => {
         dispatch(load_desks());
         }, [])
     const desks = useSelector(state => state.desks.desks);
+
+    const onClickLike = (desk_id) => {
+        axios.put(
+            'http://localhost:9000/api/desks/toggle/',
+            {
+                desk_id: desk_id
+            },
+            {
+                headers: {
+                    'Content-Type': "application/json",
+                    'Authorization': 'Bearer ' + localStorage.getItem('token')
+                }
+            }
+        )
+        dispatch(load_desks());
+    }
 
 
     if (user) {
@@ -104,9 +121,18 @@ const Desks = () => {
                                         <div className="card border-primary mb-3">
                                             <div className="card-header">
                                                 <div className="row">
-                                                    <div className="col" style={{fontSize: "18px"}}>EduPro Cards Desk №{index + 1}</div>
+                                                    <div className="col" style={{fontSize: "18px"}}>
+                                                        EduPro Cards Desk №{index + 1}
+                                                    </div>
+                                                    <div className="col form-check form-switch">
+                                                            <input className="form-check-input" type="checkbox"
+                                                                id="flexSwitchCheckDefault"
+                                                                checked={item.liked}
+                                                                onClick={(e) => onClickLike(item.desk_id)}/>
+                                                            <label className="form-check-label" htmlFor="flexSwitchCheckDefault">Liked</label>
+                                                    </div>
                                                     <div className="col" style={{textAlign: "right"}}>
-                                                        <a className="btn btn-info btn-sm px-4 me-sm-3">
+                                                        <a className="btn btn-primary btn-sm px-4 me-sm-3">
                                                             <LinkWrapperButton to={`/desks/edit/${item.desk_id}`}>Edit</LinkWrapperButton>
                                                         </a>
                                                         <a className="btn btn-primary btn-sm px-4 me-sm-3" >

@@ -12,6 +12,7 @@ RUN npm install react-bootstrap
 RUN npm install react-redux
 RUN npm install redux-thunk
 RUN npm install react-toastify
+RUN npm install bootstrap4-toggle
 
 
 COPY . ./
