@@ -15,6 +15,9 @@ import Cards from "./components/cards/cards";
 import DesksCreate from "./components/desks/desks_create"
 import DesksEdit from "./components/desks/desks_edit";
 import CardsAdd from "./components/cards/cards_add";
+import CoursePage from "./components/courses/course_page";
+import Favourites from "./components/home/favourites";
+import Feedback from "./components/account/feedback";
 
 
 const App = () => (
@@ -25,11 +28,14 @@ const App = () => (
                 <Route path="/login" element={<Login />} />
                 <Route path="/account" element={<Account />} />
                 <Route exact path="/desks" element={<Desks />} />
-                <Route path="/courses" element={<Courses />} />
+                <Route exact path="/courses" element={<Courses />} />
+                <Route path="/courses/:course_id" element={<CoursePage />} />
                 <Route path="/desks/:desk_id" element={<Cards />} />
                 <Route path="/desks/edit/:desk_id" element={<DesksEdit />} />
                 <Route path="/desks/add/card/:desk_id/" element={<CardsAdd />} />
                 <Route path="/desks/create" element={<DesksCreate />} />
+                <Route path="/favourites" element={<Favourites />} />
+                <Route path="/feedback" element={<Feedback />} />
                 <Route path="/" element={<Index />} />
             </Routes>
         </Router>

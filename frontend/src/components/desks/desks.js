@@ -80,6 +80,9 @@ const Desks = () => {
                             <a className="list-group-item list-group-item-action list-group-item-light p-3">
                                 <b style={{color: "black"}}>My Cards</b>
                             </a>
+                            <a className="list-group-item list-group-item-action list-group-item-light p-3">
+                                <LinkWrapper to="/favourites">Favourites</LinkWrapper>
+                            </a>
                         </div>
                     </div>
                     <div id="page-content-wrapper">
@@ -127,7 +130,7 @@ const Desks = () => {
                                                     <div className="col form-check form-switch">
                                                             <input className="form-check-input" type="checkbox"
                                                                 id="flexSwitchCheckDefault"
-                                                                checked={item.liked}
+                                                                checked={item.toggle}
                                                                 onClick={(e) => onClickLike(item.desk_id)}/>
                                                             <label className="form-check-label" htmlFor="flexSwitchCheckDefault">Liked</label>
                                                     </div>

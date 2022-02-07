@@ -90,6 +90,9 @@ const DesksEdit = () => {
                             <a className="list-group-item list-group-item-action list-group-item-light p-3">
                                 <LinkWrapper to="/desks">My Cards</LinkWrapper>
                             </a>
+                            <a className="list-group-item list-group-item-action list-group-item-light p-3">
+                                <LinkWrapper to="/favourites">Favourites</LinkWrapper>
+                            </a>
                         </div>
                     </div>
                     <div id="page-content-wrapper">

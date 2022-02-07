@@ -1,1 +1,1 @@
-# from .sources.views. import *
+from .sources.views.course_routes import *

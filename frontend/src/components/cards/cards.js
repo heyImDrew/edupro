@@ -59,6 +59,9 @@ const Cards = () => {
                             <a className="list-group-item list-group-item-action list-group-item-light p-3">
                                 <b style={{color: "black"}}>My Cards</b>
                             </a>
+                            <a className="list-group-item list-group-item-action list-group-item-light p-3">
+                                <LinkWrapper to="/favourites">Favourites</LinkWrapper>
+                            </a>
                         </div>
                     </div>
                     <div id="page-content-wrapper">

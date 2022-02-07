@@ -5,10 +5,8 @@ import {connect, useDispatch, useSelector} from "react-redux";
 import {Navigate, Link} from "react-router-dom";
 import {Dropdown} from "react-bootstrap";
 import styled from "styled-components";
-import {load_courses} from "../../actions/courses";
-import {useEffect, useState} from "react";
-import {load_desks} from "../../actions/desks";
-import axios from "axios";
+import {useEffect} from "react";
+import {load_fav} from "../../actions/fav";
 
 const LinkWrapper = styled(Link)`
     text-decoration: none;
@@ -37,36 +35,17 @@ const LinkWrapperButtonCreate = styled(Link)`
 `
 
 
-const Courses = () => {
+const Favourites = () => {
 
     const user = useSelector(state => state.login.user);
 
     const dispatch = useDispatch();
     useEffect(() => {
-        dispatch(load_courses());
+        dispatch(load_fav());
         }, [])
-    const courses = useSelector(state => state.courses.courses);
 
-    const [searchTerm, setSearchTerm] = useState("");
-    const handleChange = event => {
-        setSearchTerm(event.target.value);
-      };
-
-    const onClickLike = (course_id) => {
-        axios.put(
-            'http://localhost:9000/api/courses/toggle/',
-            {
-                course_id: course_id
-            },
-            {
-                headers: {
-                    'Content-Type': "application/json",
-                    'Authorization': 'Bearer ' + localStorage.getItem('token')
-                }
-            }
-        )
-        dispatch(load_courses());
-    }
+    const courses = useSelector(state => state.fav.favourites.courses.data);
+    const desks = useSelector(state => state.fav.favourites.desks.data);
 
 
     if (user) {
@@ -81,13 +60,13 @@ const Courses = () => {
                                 <LinkWrapper to="/dashboard">Dashboard</LinkWrapper>
                             </a>
                             <a className="list-group-item list-group-item-action list-group-item-light p-3">
-                                <b style={{color: "black"}}>My Courses</b>
+                                <LinkWrapper to="/courses">My Courses</LinkWrapper>
                             </a>
                             <a className="list-group-item list-group-item-action list-group-item-light p-3">
                                 <LinkWrapper to="/desks">My Cards</LinkWrapper>
                             </a>
                             <a className="list-group-item list-group-item-action list-group-item-light p-3">
-                                <LinkWrapper to="/favourites">Favourites</LinkWrapper>
+                                <b style={{color: "black"}}>Favourites</b>
                             </a>
                         </div>
                     </div>
@@ -119,33 +98,16 @@ const Courses = () => {
                         </nav>
                         <div className="container-fluid" style={{paddingLeft: "75px", paddingRight: "75px", paddingTop: "25px"}}>
                             <h1 style={{marginBottom: "30px", fontSize: "42px"}}>
-                                <div class="row">
-                                    <div class="col">
-                                        <h1>Available Courses</h1>
-                                    </div>
-                                    <div class="col">
-                                        <input className="form-control" id="search" name="search" type="text"
-                                          placeholder="Search by" value={searchTerm} onChange={handleChange} style={{maxWidth: "115px", marginLeft: "558px"}} />
-                                    </div>
-                                </div>
+                                Favourite: Courses
                             </h1>
-
-                            {courses.filter(item =>
-                                  item.name.toLowerCase().includes(searchTerm.toLowerCase())
-                                ).map((item, index) =>{
+                            {courses.map((item, index) => {
+                                if (item.toggle) {
                                     return (
                                         <div className="card border-primary mb-3">
                                             <div className="card-header">
                                                 <div className="row">
                                                     <div className="col" style={{fontSize: "18px"}}>
-                                                        EduPro Course №{index + 1}
-                                                    </div>
-                                                    <div className="col form-check form-switch">
-                                                            <input className="form-check-input" type="checkbox"
-                                                                id="flexSwitchCheckDefault"
-                                                                checked={item.toggle}
-                                                                onClick={(e) => onClickLike(item.course_id)}/>
-                                                            <label className="form-check-label" htmlFor="flexSwitchCheckDefault">Liked</label>
+                                                        EduPro Course
                                                     </div>
                                                     <div className="col" style={{textAlign: "right"}}>
                                                         <a className="btn btn-primary btn-sm px-4 me-sm-3" >
@@ -157,13 +119,41 @@ const Courses = () => {
                                             <div className="card-body text-primary">
                                                 <h5 className="card-title" style={{color:"black", fontSize:"32px", marginBottom: "20px"}}><b>{item.name}</b></h5>
                                                 <p className="card-text">{item.description}</p>
-                                                <hr/>
-                                                <img src={item.image} alt="Course Image" style={{width: "50%", height: "150px", marginTop: "15px", marginBottom: "20px", marginLeft:"325px"}}/>
                                             </div>
                                         </div>
                                     )
+                                }
                                 })}
-
+                            <h1 style={{marginBottom: "30px", marginTop: "30px", fontSize: "42px"}}>
+                                Favourite: Desks
+                            </h1>
+                            {desks.map((item, index) =>{
+                                if (item.toggle) {
+                                    return (
+                                        <div className="card border-primary mb-3">
+                                            <div className="card-header">
+                                                <div className="row">
+                                                    <div className="col" style={{fontSize: "18px"}}>
+                                                        EduPro Cards Desk
+                                                    </div>
+                                                    <div className="col" style={{textAlign: "right"}}>
+                                                        <a className="btn btn-primary btn-sm px-4 me-sm-3">
+                                                            <LinkWrapperButton to={`/desks/edit/${item.desk_id}`}>Edit</LinkWrapperButton>
+                                                        </a>
+                                                        <a className="btn btn-primary btn-sm px-4 me-sm-3" >
+                                                            <LinkWrapperButton to={`/desks/${item.desk_id}`}>Dive into!</LinkWrapperButton>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="card-body text-primary">
+                                                <h5 className="card-title" style={{color:"black", fontSize:"32px", marginBottom: "20px"}}><b>{item.name}</b></h5>
+                                                <p className="card-text">{item.description}</p>
+                                            </div>
+                                        </div>
+                                    )
+                                }
+                                })}
                         </div>
                     </div>
                 </div>
@@ -180,4 +170,4 @@ const Courses = () => {
 const mapStateToProps = state => ({
 });
 
-export default connect(mapStateToProps, {load_desks})(Courses);
+export default connect(mapStateToProps, {load_fav})(Favourites);

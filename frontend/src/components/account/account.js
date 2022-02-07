@@ -32,6 +32,7 @@ const Account = () => {
         }, [])
     const account = useSelector(state => state.account.account.data);
     const amount = useSelector(state => state.account.account.amount);
+    const amount_2 = useSelector(state => state.account.account.amount_2);
     const get_image = (gender) => {
         let image = ""
         if (gender === "man") {
@@ -63,6 +64,9 @@ const Account = () => {
                             <a className="list-group-item list-group-item-action list-group-item-light p-3">
                                 <LinkWrapper to="/desks">My Cards</LinkWrapper>
                             </a>
+                            <a className="list-group-item list-group-item-action list-group-item-light p-3">
+                                <LinkWrapper to="/favourites">Favourites</LinkWrapper>
+                            </a>
                         </div>
                     </div>
                     <div id="page-content-wrapper">
@@ -82,7 +86,7 @@ const Account = () => {
 
                                               <Dropdown.Menu>
                                                 <Dropdown.Item><LinkWrapper to="/account">Account Set Up</LinkWrapper></Dropdown.Item>
-                                                <Dropdown.Item><LinkWrapper to="/">Feedback</LinkWrapper></Dropdown.Item>
+                                                <Dropdown.Item><LinkWrapper to="/feedback">Feedback</LinkWrapper></Dropdown.Item>
                                                 <Dropdown.Item href="/" style={{color: "#636464"}}>Logout</Dropdown.Item>
                                               </Dropdown.Menu>
                                             </Dropdown>
@@ -115,7 +119,7 @@ const Account = () => {
                                                     <div
                                                         className="d-flex justify-content-between text-center mt-5 mb-2">
                                                         <div>
-                                                            <p className="mb-2 h5">{account.courses}</p>
+                                                            <p className="mb-2 h5">{amount_2.courses}</p>
                                                             <p className="text-muted mb-0">Courses Available</p>
                                                         </div>
                                                         <div className="px-3">

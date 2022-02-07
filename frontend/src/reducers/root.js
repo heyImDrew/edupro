@@ -6,6 +6,9 @@ import dashnews from "./dashnews"
 import desks from "./desks";
 import desks_create from "./desks_create";
 import cards_add from "./cards_add";
+import courses from "./courses"
+import course_page from "./course_page";
+import fav from "./fav"
 
 export const rootReducer = combineReducers({
     login,
@@ -15,4 +18,7 @@ export const rootReducer = combineReducers({
     desks_create,
     desks,
     cards_add,
+    courses,
+    course_page,
+    fav,
 });

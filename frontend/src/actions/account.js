@@ -14,9 +14,10 @@ export const load_account = () => async dispatch => {
 
         const res = await axios.get(HOST + "users/information/", config)
         const res2 = await axios.get(HOST + "cards/amount/", config)
+        const res3 = await axios.get(HOST + "courses/amount/", config)
         dispatch({
             type: authConstants.GET_USER_INFO_SUCCESS,
-            payload: {data: res.data, amount: res2.data}
+            payload: {data: res.data, amount: res2.data, amount_2: res3.data}
         })
 
     } catch (err) {

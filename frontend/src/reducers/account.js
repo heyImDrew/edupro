@@ -3,7 +3,8 @@ import {authConstants} from "../actions/types";
 const initialState = {
         account: {
             data: '',
-            amount: ''
+            amount: '',
+            amount_2: '',
     }
 }
 

@@ -24,10 +24,11 @@ const Home = () => {
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(load_dashnews());
-        dispatch(load_dashnews());
         }, [])
     const dashnews = useSelector(state => state.dashnews.dashnews.data);
     const rand_desk_id = useSelector(state => state.dashnews.dashnews.random_desk_data.desk_id);
+    const rand_course_id = useSelector(state => state.dashnews.dashnews.random_course_data.course_id);
+
 
     if (user) {
         return (
@@ -45,6 +46,9 @@ const Home = () => {
                             </a>
                             <a className="list-group-item list-group-item-action list-group-item-light p-3">
                                 <LinkWrapper to="/desks">My Cards</LinkWrapper>
+                            </a>
+                            <a className="list-group-item list-group-item-action list-group-item-light p-3">
+                                <LinkWrapper to="/favourites">Favourites</LinkWrapper>
                             </a>
                         </div>
                     </div>
@@ -101,8 +105,10 @@ const Home = () => {
                             <div className="row">
                                 <div className="col-lg-4 col-md-4 col-sm-6 mb-5">
                                     <div className="card bg-light" style={{height: "275px"}}>
-                                        <a href="#"><img className="card-img-top"
+                                        <Link to={`/courses/${rand_course_id}`}>
+                                            <a href="#"><img className="card-img-top"
                                                          src="https://sun9-68.userapi.com/impg/c850608/v850608293/188e68/-r6r2EQYRNs.jpg?size=1280x844&quality=96&sign=b4dbd576db84649c17c2baad2ff16541&type=album" alt="" height="200px"/></a>
+                                        </Link>
                                         <div className="card-body" style={{height: "75px"}}>
                                             <h4 className="card-title">
                                                 Random Course

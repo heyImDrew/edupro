@@ -20,5 +20,4 @@ def profile_autocreate(instance, created, **kwargs):
 def profile_autodelete(instance, **kwargs):
     user_id = instance.id
     profile = Profile.objects.get(user_id=user_id)
-    print(profile)
     profile.delete()
